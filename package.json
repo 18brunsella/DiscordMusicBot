@@ -1,0 +1,34 @@
+{
+  "name": "discordmusicbot",
+  "version": "1.0.0",
+  "description": "Music Bot for Discord Servers",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/18brunsella/DiscordMusicBot.git"
+  },
+  "author": "Arvid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/18brunsella/DiscordMusicBot/issues"
+  },
+  "homepage": "https://github.com/18brunsella/DiscordMusicBot#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.13.0",
+    "@discordjs/opus": "^0.7.0",
+    "@discordjs/rest": "^0.4.1",
+    "@discordjs/voice": "^0.9.0",
+    "discord-api-types": "^0.31.2",
+    "discord-ytdl-core": "^5.0.4",
+    "discord.js": "^13.6.0",
+    "ffmpeg-static": "^5.0.0",
+    "libsodium-wrappers": "^0.7.10",
+    "standard": "^17.0.0",
+    "youtube-sr": "^4.1.15",
+    "yt-search": "^2.10.3",
+    "ytdl-core": "^4.11.0"
+  }
+}
