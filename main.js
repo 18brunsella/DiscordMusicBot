@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const { Client, Collection, Intents} = require('discord.js')
 const { token } = require('./config.json');
+const {queueConstructor} = require("../handlers/player");
 
 const client = new Client(clientSettingsObject())
 const prefix = '-';
@@ -34,7 +35,12 @@ client.on('messageCreate', async message => {
 	
 })
 
-client.login(token)
+client.login(token).then(_ => {
+  console.log("Successful login to the client");
+  queueConstructor.songs = null;
+  queueConstructor.nowPlaying = null;
+  queueConstructor.songNames = null;
+})
 
 
 function clientSettingsObject() {

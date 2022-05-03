@@ -1,6 +1,7 @@
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, AudioPlayerStatus} = require("@discordjs/voice");
+const { MessageEmbed } = require('discord.js')
+const { player, queueConstructor } = require('../handlers/player')
+const { joinVoiceChannel, createAudioResource} = require("@discordjs/voice");
 const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
 
 module.exports = {
   name : 'play',
@@ -23,24 +24,32 @@ module.exports = {
 
       const info = await ytdl.getInfo(args[0]);
       const songTitle = info.videoDetails.title;
-      
+      let songDuration = info.videoDetails.lengthSeconds;
+      const formattedDuration = new Date(songDuration * 1000).toISOString().slice(11, 19);
       // Get the stream object
       const musicStream = await ytdl(args[0], { filter: "audioonly" });
-      // AudioPlayer and AudioResource objects 
-      const player = createAudioPlayer();
+      // AudioResource objects 
       let resource = createAudioResource(musicStream);
       
       connection.subscribe(player);
       
       player.play(resource);
 
-      await message.reply(`Now Playing ***${songTitle}***`) 
+      const songPlaying = new MessageEmbed()
+      .setColor("BLUE")
+      .setDescription(` \`${songTitle}\` is now playing - \`${formattedDuration}\` \n Requested by: ${message.author}`)
+
+      await message.reply({embeds : [songPlaying]})
       
       player.on(AudioPlayerStatus.Idle, () => {
         connection.disconnect();
       });
     }else{
-      return message.channel.send('Not a valid link bro');
+      const errorPlayMusic = new MessageEmbed()
+      .setColor("RED")
+      .setDescription(`Not a valid link bro`)
+
+      return message.channel.send({embed : [errorPlayMusic]});
     }
   }
 }
