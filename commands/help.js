@@ -1,20 +1,27 @@
+// MessageEmbed from Discord API 
 const { MessageEmbed } = require('discord.js')
 
+// Help Command Export 
+// Gives a list of options the end user can use
 module.exports = {
   name : 'help',
   description: 'Prints out the list of options available',
   async execute(client, message, args){
+    // The embed message for the list of options
     const helpMessage = new MessageEmbed()
       .setColor('BLUE')
       .setTitle('Lets Play Some Bangers Bot Command List')
-      .setDescription(` \`-play YOUTUBEURL\` can only play youtube links / urls. Song would immediately play even if there is one playing currently.\n 
+      .setDescription(` You can ONLY play songs from Youtube \n
+                        \`-play YOUTUBEURL\` can only play youtube links / urls. Song would immediately play even if there is one playing currently.\n 
                         \`-stop\` stops the current song \n
                         \`-skip\` skips the current song and goes to next song in queue \n
                         \`-disconnect\` removes the bot from the voice channel \n
                         \`-queue YOUTUBEURL\` adds the song into queue \n
                         \`-showqueue\` shows songs on the queue \n
-                        \`-help\` shows all of the command options \n`)
+                        \`-help\` shows all of the command options \n
+                        \`-clear\` clears the queue \n`)
 
-      await message.reply({embeds : [helpMessage]})
+    // Reply to the user with the list above 
+    await message.reply({embeds : [helpMessage]})
   }
 }

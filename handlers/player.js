@@ -1,12 +1,21 @@
-const { createAudioPlayer} = require("@discordjs/voice");
+// Discord Voice API (retrieves the createAudioPlayer)
+const { createAudioPlayer, NoSubscriberBehavior} = require("@discordjs/voice");
 
-const player = createAudioPlayer();
+// Creates the audio player 
+const player = createAudioPlayer({
+    behaviors: {
+        noSubscriber: NoSubscriberBehavior.Play
+    }
+});
 
-let queueConstructor = {
-    songs: [],
-    songNames: [],
+// Creates the song queue 
+let songQueue = {
+    songURL: [],
+    songName: [],
+    songDuration: [],
     nowPlaying: "",
 };
 
+// Exports these default values 
 module.exports.player = player;
-module.exports.queueConstructor = queueConstructor;
+module.exports.songQueue = songQueue;
