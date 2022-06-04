@@ -1,9 +1,4 @@
-// Get the audio player from handlers 
-const { player } = require('../handlers/player')
-// Get the AudioPlayerStatus from Discord Voice API  
-const { AudioPlayerStatus } = require("@discordjs/voice");
-// Get the Message Embed from Discord API 
-const { MessageEmbed } = require('discord.js')
+const { getVoiceConnection } = require('@discordjs/voice');
 
 // Stop Command Export 
 // Stops the current song completly 
@@ -12,33 +7,25 @@ module.exports = {
   description : 'Stops the song currently playing',
   async execute(client, message, args){
     // The user needs to be in the same voice channel as bot to execute command
-    if(!message.member.voice.channelId) return message.channel.send('You need to be in a channel to execute the command!')
+    if(!message.member.voice.channelId) return message.channel.send('❌| You need to be in a channel to execute the command!')
 
-    // Gets bots voice connection 
-    const result = getVoiceConnection(message.guild.id);
-    // If the bot has no connection, send a message to user
-    if(!result) return message.channel.send('Nothing to stop. Bot is not in a channel')
-    
+    // Get current queue 
+    let queue = player.getQueue(message.guild.id);
+    if(!queue) return message.channel.send('❌ | Nothing is playing ...')
+
+    // If there is no connection, send error message
+    if (!queue.connection){
+      return message.channel.send('❌ | Nothing to stop!')
+    }
+
     // If the player is playing something 
-    if(AudioPlayerStatus.Playing){
-      // Stop the player 
-      player.pause();
+    if(queue.playing){
+      queue.setPaused(true);
 
-      // Create an embed message of the stoping the song 
-      const stopMusic = new MessageEmbed()
-        .setColor("RED")
-        .setDescription(`We stopped the music mate`)
-
-      // Reply back to the user 
-      await message.reply({embeds : [stopMusic]})
+      return await message.channel.send(':pause_button: | Paused the music...')
     }else{
-      // Create an embed message of the error saying that there is nothing playing 
-      const errorStopMusic = new MessageEmbed()
-        .setColor("RED")
-        .setDescription(`Nothing playing right now`)
-
       // Reply back to the user 
-      await message.reply({embeds : [errorStopMusic]})
+      return await message.channel.send(`❌ | Nothing playing right now`)
     }
   }
 }

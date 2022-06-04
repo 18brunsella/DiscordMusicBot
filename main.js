@@ -4,10 +4,14 @@ const fs = require('node:fs');
 const { Client, Collection, Intents} = require('discord.js');
 // File that contains token 
 const { token } = require('./config.json');
-// const {queueConstructor} = require("../handlers/player");
+// Get Player from discord-player
+const { Player } = require('discord-player');
 
 // New Discord Client Object 
 const client = new Client(clientSettingsObject())
+// New Discord Player Object 
+global.player = new Player(client);
+
 // Command prefix
 const prefix = '-';
 
@@ -25,8 +29,13 @@ for (const file of commandFiles) {
 // Once ready, send console message 
 client.once('ready', () => {
     console.log('We are ready! Lets play some music');
+    client.user.setActivity({
+      name: "SOME BANGERS",
+      type: "LISTENING"
+    })
 })
 
+require('./src/events');
 
 // If message is created by end user
 client.on('messageCreate', async message => {
@@ -45,18 +54,15 @@ client.on('messageCreate', async message => {
     // Executes the command 
 		client.commands.get(command).execute(client, message, args);
 	} catch (error) {
-		// console.error(error);
     // Sends error message to user if there was any error
 		await message.channel.send('There was an error while executing this command! Use -help to see the list of commands');
 	}
 	
 })
 
+// Login with token
 client.login(token).then(_ => {
   console.log("Successful login to the client");
-  //queueConstructor.songs = null;
-  //queueConstructor.nowPlaying = null;
-  //queueConstructor.songNames = null;
 })
 
 // Settings for the client 

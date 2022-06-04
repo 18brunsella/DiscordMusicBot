@@ -10,8 +10,8 @@ module.exports = {
     // The embed message for the list of options
     const helpMessage = new MessageEmbed()
       .setColor('BLUE')
-      .setTitle('Lets Play Some Bangers Bot Command List')
-      .setDescription(` You can ONLY play songs from Youtube \n
+      .setTitle('Lets Play Some Bangers! Bot Command List :musical_note:')
+      .setDescription(` You can ONLY play songs from Youtube 	:notes: \n
                         \`-play YOUTUBEURL\` can only play youtube links / urls. Song would immediately play even if there is one playing currently.\n 
                         \`-stop\` stops the current song \n
                         \`-skip\` skips the current song and goes to next song in queue \n

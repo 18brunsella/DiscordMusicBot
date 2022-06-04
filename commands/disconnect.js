@@ -1,5 +1,3 @@
-// Get the audio player from handlers
-const { player } = require("../handlers/player");
 // Get the audio player status and the current voice connection from Discord Voice API 
 const { AudioPlayerStatus, getVoiceConnection } = require("@discordjs/voice");
 
@@ -10,16 +8,20 @@ module.exports = {
   description : 'Disconnects the bot from the channel',
   async execute(client, message, args){
     // The end user needs to be in the same channel to execute command
-    if(!message.member.voice.channelId) return message.channel.send('You need to be in a channel to execute the command!')
-    // If the player is playing something, have the player pause 
-    if(AudioPlayerStatus.Playing) player.pause();
-    // Get the current bot connection 
-    const connection = getVoiceConnection(message.guild.id);
-    // Disconnect / Destroy the connection 
-    if(connection != null){
-      connection.destroy();
+    if(!message.member.voice.channelId) return message.channel.send('❌| You need to be in a channel to execute the command!')
+    
+    // Get current queue 
+    let queue = player.getQueue(message.guild.id);
+
+    // If there is no connection, send error message
+    if (!queue || !queue.connection){
+      return message.channel.send('❌ | No bot is a voice channel to disconnect!')
     }
-    // Have a goodbye message 
-    await message.reply("Goodbye!")
+
+    // Destroys the queue and disconnects from voice channel
+    queue.destroy();
+
+    // Return a message to tell user that bot was disconnected 
+    return await message.channel.send(`Bot was disconnected. Goodbye! :hand_splayed:`);
   }
 }
