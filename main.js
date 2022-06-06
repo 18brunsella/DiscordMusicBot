@@ -17,6 +17,9 @@ global.player = new Player(client);
 // Command prefix
 const prefix = '-';
 
+// Set client avatar
+client.user.setAvatar('./avatar/discord-music-bot-avatar.jpg');
+
 // Utility class (Collection): it is a extension of Javascripts native Map (key : value); 
 client.commands = new Collection();
 // Gets all the file names that end with .js in the commands directory
