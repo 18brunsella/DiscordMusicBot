@@ -1,2 +1,2 @@
 heroku ps:scale worker=1
-worker: node main.js 
+worker: node ./main.js 
