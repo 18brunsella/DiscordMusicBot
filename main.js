@@ -2,8 +2,10 @@
 const fs = require('node:fs');
 // Discord API wrapper 
 const { Client, Collection, Intents} = require('discord.js');
-// File that contains token 
-const { token } = require('./config.json');
+// File that contains token
+// Commented out due to hosting 
+// const { token } = require('./config.json');
+
 // Get Player from discord-player
 const { Player } = require('discord-player');
 
@@ -61,7 +63,7 @@ client.on('messageCreate', async message => {
 })
 
 // Login with token
-client.login(token).then(_ => {
+client.login(process.env.DJS_TOKEN).then(_ => {
   console.log("Successful login to the client");
 })
 
