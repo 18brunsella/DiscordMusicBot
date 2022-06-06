@@ -1,10 +1,5 @@
-
-// Clear Command Export 
-
-const queue = require("./queue");
-
 // Clears the current queue of songs 
-module.export = {
+module.exports = {
   name: "clear",
   description: "Clears the queue of songs",
   async execute(client, message, args){
@@ -13,11 +8,17 @@ module.export = {
 
     // Get current queue 
     let queue = player.getQueue(message.guild.id);
+    // If there is no queue available
     if(!queue) return message.channel.send('❌ | No Queue. Nothing to clear!')
 
     // If there is no connection, send error message
     if (!queue.connection){
-      return message.channel.send('❌ | Nothing to clear!')
+      return message.channel.send('❌ | Bot is not connected to voice channel!')
+    }
+
+    // If size of queue is zero
+    if (queue.tracks.length === 0){
+      return message.channel.send('❌ | There are no songs in the queue! It is already clear...')
     }
     
     // Try and catch block to clear the queue

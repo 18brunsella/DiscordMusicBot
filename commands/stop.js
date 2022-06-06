@@ -11,6 +11,7 @@ module.exports = {
 
     // Get current queue 
     let queue = player.getQueue(message.guild.id);
+    // There is no existing queue currently
     if(!queue) return message.channel.send('❌ | Nothing is playing ...')
 
     // If there is no connection, send error message
@@ -20,6 +21,7 @@ module.exports = {
 
     // If the player is playing something 
     if(queue.playing){
+      // Set Paused to true on the queue
       queue.setPaused(true);
 
       return await message.channel.send(':pause_button: | Paused the music...')

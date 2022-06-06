@@ -15,7 +15,7 @@ player.on("connectionError", (queue, error) => {
 
 // Add the trackAdd event so when a song is being added, this message will be sent
 player.on("trackAdd", (queue, track) => {
-  queue.metadata.channel.send(`:white_check_mark: | **${track.title}** is being added to the queue`);
+  queue.metadata.channel.send(`:white_check_mark: | **${track.title}** was added to the queue`);
 });
 
 // Add a bot disconnect event

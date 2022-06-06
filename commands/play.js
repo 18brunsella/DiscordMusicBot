@@ -6,7 +6,7 @@ const { QueryType } = require('discord-player');
 // Plays the song, replaces any song that is currently playing 
 module.exports = {
   name : 'play',
-  description: 'Plays the song with attached URL. Will replace any current playing song.',
+  description: 'Plays the song with attached URL. Adds to queue if song is currently playing',
   async execute(client, message, args){
     // If user who sent the messsage is not in a voice channel, the command will not execute 
     if(!message.member.voice.channelId) return message.channel.send('❌ | You need to be in a channel to execute the command!')
@@ -52,7 +52,9 @@ module.exports = {
       const songTitle = await (await playdl.video_info(args[0])).video_details.title;
 
       // Loading Track Message
-      await message.channel.send({ content: `⏱️ | Loading track **${songTitle}**!` });
+      if(!queue.playing){
+        await message.channel.send({ content: `⏱️ | Loading track **${songTitle}**!` });
+      }
       
       // Search for song using the URL (using the search function from Player object)
       const track = await player.search(args[0], {

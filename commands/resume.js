@@ -18,7 +18,7 @@ module.exports = {
 
     // Try and catch block to set paused to false
     try{
-      // Resume the song (empty parameters just means it takes the first song in the queue)
+      // Set Paused to false (assuming we have stopped before this command)
       queue.setPaused(false);
       // Reply to the user 
       return await message.channel.send(`🎶 | Music is back on`)

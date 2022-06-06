@@ -1,6 +1,3 @@
-// Get the audio player status and the current voice connection from Discord Voice API 
-const { AudioPlayerStatus, getVoiceConnection } = require("@discordjs/voice");
-
 // Disconnect Command Export 
 // Disconnects the audio player from the voice channel
 module.exports = {
